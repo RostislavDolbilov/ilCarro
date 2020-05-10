@@ -3,6 +3,7 @@ package ilcarro.service.impl;
 import ilcarro.exeptions.ActionDeniedException;
 import ilcarro.model.auth.Role;
 import ilcarro.model.auth.User;
+import javassist.NotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -69,17 +70,25 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto findByUsernameMail(String username) {
+    public UserDto findByUsernameMail(String username) throws NotFoundException {
         UserDto user = userEntityRepository.findByUsernameMail(username).toUserDto();
+        if (user == null) {
+            log.warn("IN findByUsernameMail - no user found by username: {}", username);
+            throw  new NotFoundException("User with username: " + username + "not found");
+        }
         log.info("IN findByUsernameMail - user: {} found by username: {}", user, username);
         return user;
     }
 
     @Override
-    public User findByUsername(String username) {
-        User result = userRepository.findByUsername(username);
-        log.info("IN findByUsername - user: {} found by username: {}", result, username);
-        return result;
+    public User findByUsername(String username) throws NotFoundException {
+        User user = userRepository.findByUsername(username);
+        if (user == null) {
+            log.warn("IN findByUsername - no user found by username: {}", username);
+            throw  new NotFoundException("User with username: " + username + "not found");
+        }
+        log.info("IN findByUsername - user: {} found by username: {}", user, username);
+        return user;
     }
 
     @Override
@@ -90,9 +99,8 @@ public class UserServiceImpl implements UserService {
         User userAuth = userRepository.findByUsername(username);
         userAuth.setStatus(Status.DELETED);
 
-        log.info("IN deleteUser - user with id: {} successfully deleted", username);
-
         userRepository.save(userAuth);
+        log.info("IN deleteUser - user with id: {} successfully deleted", username);
         return userEntityRepository.save(user).toUserDto();
     }
 
@@ -104,18 +112,17 @@ public class UserServiceImpl implements UserService {
         User userAuth = userRepository.findByUsername(username);
         userAuth.setStatus(Status.ACTIVE);
 
-        log.info("IN returnUser - user with id: {} successfully returned", username);
-
         userRepository.save(userAuth);
+        log.info("IN returnUser - user with id: {} successfully returned", username);
         return userEntityRepository.save(user).toUserDto();
     }
 
     @Override
-    public User findById(Long id) {
+    public User findById(Long id) throws NotFoundException {
         User result = userRepository.findById(id).orElse(null);
         if (result == null) {
             log.warn("IN findById - no user found by id: {}", id);
-            return null;
+            throw  new NotFoundException("User with id: " + id + "not found");
         }
         log.info("IN findById - user: {} found by id: {}",id,  result);
         return result;
