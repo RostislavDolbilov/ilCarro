@@ -113,16 +113,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findById(Long id) {
         User result = userRepository.findById(id).orElse(null);
-
         if (result == null) {
             log.warn("IN findById - no user found by id: {}", id);
             return null;
         }
-
         log.info("IN findById - user: {} found by id: {}",id,  result);
         return result;
     }
-
 
     @Override
     public List<UserAuthDto> getAllRegisteredUsers() {
@@ -135,17 +132,29 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserAuthDto> getAllActiveUsers(Status status) {
-        return null;
+    public List<UserAuthDto> getAllActiveUsers() {
+        List<UserAuthDto> result = userRepository.findAll()
+                .stream()
+                .filter(user -> user.getStatus() == Status.ACTIVE)
+                .map(User::toUserAuthDto)
+                .collect(Collectors.toList());
+        log.info("IN getAllAuthUsers - {} users found", result.size());
+        return result;
     }
 
     @Override
-    public List<UserAuthDto> getAllDeletedUsers(Status status) {
-        return null;
+    public List<UserAuthDto> getAllDeletedUsers() {
+        List<UserAuthDto> result = userRepository.findAll()
+                .stream()
+                .filter(user -> user.getStatus() == Status.DELETED)
+                .map(User::toUserAuthDto)
+                .collect(Collectors.toList());
+        log.info("IN getAllAuthUsers - {} users found", result.size());
+        return result;
     }
 
     @Override
-    public List<UserAuthDto> getAllAdminUsers(Status status) {
+    public List<UserAuthDto> getAllAdminUsers() {
         return null;
     }
 

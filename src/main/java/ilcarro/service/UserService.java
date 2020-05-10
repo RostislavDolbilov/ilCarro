@@ -13,9 +13,9 @@ import java.util.List;
 public interface UserService {
     /* ADMIN */
     List<UserAuthDto> getAllRegisteredUsers();
-    List<UserAuthDto> getAllActiveUsers(Status status);
-    List<UserAuthDto> getAllDeletedUsers(Status status);
-    List<UserAuthDto> getAllAdminUsers(Status status);
+    List<UserAuthDto> getAllActiveUsers();
+    List<UserAuthDto> getAllDeletedUsers();
+    List<UserAuthDto> getAllAdminUsers();
     List<UserAuthDto> getAllUserUsers();
     User findByUsername(String username);
     User findById(Long id);
