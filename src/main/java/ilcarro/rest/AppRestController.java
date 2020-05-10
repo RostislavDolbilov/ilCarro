@@ -3,6 +3,7 @@ package ilcarro.rest;
 import ilcarro.dto.UserBaseDto;
 import ilcarro.exeptions.ActionDeniedException;
 import ilcarro.service.UserService;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +26,7 @@ public class AppRestController {
     }
 
     @GetMapping("get_by_username_email")
-    public ResponseEntity<UserDto> getByUsernameEmail(@RequestParam String username){
+    public ResponseEntity<UserDto> getByUsernameEmail(@RequestParam String username) throws NotFoundException {
         return new ResponseEntity<>(userService.findByUsernameMail(username), HttpStatus.OK);
     }
 }

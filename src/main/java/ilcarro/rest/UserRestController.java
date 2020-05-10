@@ -1,6 +1,7 @@
 package ilcarro.rest;
 
 import ilcarro.dto.UserDto;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +22,7 @@ public class UserRestController {
     }
 
     @PutMapping("deleted_user")
-    public ResponseEntity<UserDto> deletedUser(@RequestParam String username){
+    public ResponseEntity<UserDto> deletedUser(@RequestParam String username) throws NotFoundException {
         return new ResponseEntity<>(userService.deleteUser(username), HttpStatus.OK);
     }
 

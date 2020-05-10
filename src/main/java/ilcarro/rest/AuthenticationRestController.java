@@ -1,6 +1,7 @@
 package ilcarro.rest;
 
 import ilcarro.model.auth.User;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -55,7 +56,7 @@ public class AuthenticationRestController {
             response.put("token", token);
 
             return ResponseEntity.ok(response);
-        } catch (AuthenticationException e) {
+        } catch (AuthenticationException | NotFoundException e) {
             throw new BadCredentialsException("Invalid username or password");
         }
     }
