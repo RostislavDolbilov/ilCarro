@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
 @Service
 @Slf4j
 public class UserServiceImpl implements UserService {
@@ -70,10 +69,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto findByUsernameMail(String email) {
-        return userEntityRepository.findByUsernameMail(email).toUserDto();
+    public UserDto findByUsernameMail(String username) {
+        UserDto user = userEntityRepository.findByUsernameMail(username).toUserDto();
+        log.info("IN findByUsernameMail - user: {} found by username: {}", user, username);
+        return user;
     }
-
 
     @Override
     public User findByUsername(String username) {
@@ -90,7 +90,7 @@ public class UserServiceImpl implements UserService {
         User userAuth = userRepository.findByUsername(username);
         userAuth.setStatus(Status.DELETED);
 
-        log.info("IN delete - user with id: {} successfully deleted", username);
+        log.info("IN deleteUser - user with id: {} successfully deleted", username);
 
         userRepository.save(userAuth);
         return userEntityRepository.save(user).toUserDto();
@@ -104,7 +104,7 @@ public class UserServiceImpl implements UserService {
         User userAuth = userRepository.findByUsername(username);
         userAuth.setStatus(Status.ACTIVE);
 
-        log.info("IN delete - user with id: {} successfully deleted", username);
+        log.info("IN returnUser - user with id: {} successfully returned", username);
 
         userRepository.save(userAuth);
         return userEntityRepository.save(user).toUserDto();
@@ -127,7 +127,7 @@ public class UserServiceImpl implements UserService {
                 .stream()
                 .map(User::toUserAuthDto)
                 .collect(Collectors.toList());
-        log.info("IN getAllAuthUsers - {} users found", result.size());
+        log.info("IN getAllRegisteredUsers - {} users found", result.size());
         return result;
     }
 
@@ -138,7 +138,7 @@ public class UserServiceImpl implements UserService {
                 .filter(user -> user.getStatus() == Status.ACTIVE)
                 .map(User::toUserAuthDto)
                 .collect(Collectors.toList());
-        log.info("IN getAllAuthUsers - {} users found", result.size());
+        log.info("IN getAllActiveUsers - {} users found", result.size());
         return result;
     }
 
@@ -149,7 +149,7 @@ public class UserServiceImpl implements UserService {
                 .filter(user -> user.getStatus() == Status.DELETED)
                 .map(User::toUserAuthDto)
                 .collect(Collectors.toList());
-        log.info("IN getAllAuthUsers - {} users found", result.size());
+        log.info("IN getAllDeletedUsers - {} users found", result.size());
         return result;
     }
 
@@ -161,7 +161,7 @@ public class UserServiceImpl implements UserService {
                 .filter(user -> user.getRoles().contains(role))
                 .map(User::toUserAuthDto)
                 .collect(Collectors.toList());
-        log.info("IN getAllAuthUsers - {} users found", result.size());
+        log.info("IN getAllAdminUsers - {} users found", result.size());
         return result;
     }
 
