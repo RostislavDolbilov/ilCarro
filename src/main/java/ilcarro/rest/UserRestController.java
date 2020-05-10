@@ -27,6 +27,6 @@ public class UserRestController {
 
     @PutMapping("return_user")
     public ResponseEntity<UserDto> returnUser(@RequestParam String username){
-        return new ResponseEntity<>(userService.deleteUser(username), HttpStatus.OK);
+        return new ResponseEntity<>(userService.returnUser(username), HttpStatus.OK);
     }
 }
