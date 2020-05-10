@@ -97,6 +97,20 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UserDto returnUser(String username) {
+        UserEntity user = userEntityRepository.findByUsernameMail(username);
+        user.setStatus(Status.ACTIVE);
+
+        User userAuth = userRepository.findByUsername(username);
+        userAuth.setStatus(Status.ACTIVE);
+
+        log.info("IN delete - user with id: {} successfully deleted", username);
+
+        userRepository.save(userAuth);
+        return userEntityRepository.save(user).toUserDto();
+    }
+
+    @Override
     public User findById(Long id) {
         User result = userRepository.findById(id).orElse(null);
 

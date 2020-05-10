@@ -24,6 +24,7 @@ public interface UserService {
 
     /* USER */
     UserDto deleteUser(String username);
+    UserDto returnUser(String username);
     UserDto updateUser(UserDto user);
 
 //    List<CarDto> getOwnerCars(String username);
