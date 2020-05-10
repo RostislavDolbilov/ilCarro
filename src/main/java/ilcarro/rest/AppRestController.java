@@ -6,10 +6,7 @@ import ilcarro.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ilcarro.dto.UserDto;
 
 @RestController
@@ -25,5 +22,10 @@ public class AppRestController {
     @PostMapping("registration")
     public ResponseEntity<UserDto> registration(@RequestBody UserBaseDto userBaseDto) throws ActionDeniedException {
         return new ResponseEntity<>(userService.registration(userBaseDto), HttpStatus.OK);
+    }
+
+    @GetMapping("get_by_username_email")
+    public ResponseEntity<UserDto> getByUsernameEmail(@RequestParam String username){
+        return new ResponseEntity<>(userService.findByUsernameMail(username), HttpStatus.OK);
     }
 }

@@ -83,9 +83,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteUser(String username) {
-        userEntityRepository.deleteByUsernameMail(username);
+    public UserDto deleteUser(String username) {
+        UserEntity user = userEntityRepository.findByUsernameMail(username);
+        user.setStatus(Status.DELETED);
+
+        User userAuth = userRepository.findByUsername(username);
+        userAuth.setStatus(Status.DELETED);
+
         log.info("IN delete - user with id: {} successfully deleted", username);
+
+        userRepository.save(userAuth);
+        return userEntityRepository.save(user).toUserDto();
     }
 
     @Override

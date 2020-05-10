@@ -23,7 +23,7 @@ public interface UserService {
 //    RentsDto getAllRents();
 
     /* USER */
-    void deleteUser(String username);
+    UserDto deleteUser(String username);
     UserDto updateUser(UserDto user);
 
 //    List<CarDto> getOwnerCars(String username);
