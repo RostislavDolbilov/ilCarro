@@ -155,12 +155,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserAuthDto> getAllAdminUsers() {
-        return null;
-    }
-
-    @Override
-    public List<UserAuthDto> getAllUserUsers() {
-        return null;
+        Role role = roleRepository.findByName("ROLE_ADMIN");
+        List<UserAuthDto> result = userRepository.findAll()
+                .stream()
+                .filter(user -> user.getRoles().contains(role))
+                .map(User::toUserAuthDto)
+                .collect(Collectors.toList());
+        log.info("IN getAllAuthUsers - {} users found", result.size());
+        return result;
     }
 
     @Override

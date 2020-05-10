@@ -16,7 +16,6 @@ public interface UserService {
     List<UserAuthDto> getAllActiveUsers();
     List<UserAuthDto> getAllDeletedUsers();
     List<UserAuthDto> getAllAdminUsers();
-    List<UserAuthDto> getAllUserUsers();
     User findByUsername(String username);
     User findById(Long id);
     UserDto addRoleAdmin();

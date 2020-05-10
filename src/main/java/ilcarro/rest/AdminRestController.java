@@ -35,4 +35,9 @@ public class AdminRestController {
     public ResponseEntity<List<UserAuthDto>> getAllDeletedUsers() {
         return new ResponseEntity<>(userService.getAllDeletedUsers(), HttpStatus.OK);
     }
+
+    @GetMapping(value = "all_admin_users")
+    public ResponseEntity<List<UserAuthDto>> getAllAdminUsers() {
+        return new ResponseEntity<>(userService.getAllAdminUsers(), HttpStatus.OK);
+    }
 }
