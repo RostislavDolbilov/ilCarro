@@ -19,6 +19,7 @@ import ilcarro.repository.auth.UserRepository;
 import ilcarro.service.UserService;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -54,8 +55,8 @@ public class UserServiceImpl implements UserService {
         newUser.setPassword(passwordEncoder.encode(user.getPassword()));
         newUser.setRoles(userRoles);
         newUser.setStatus(user.getStatus());
-        newUser.setUpdated(LocalDate.now());
-        newUser.setCreated(LocalDate.now());
+        newUser.setUpdated(LocalDateTime.now());
+        newUser.setCreated(LocalDateTime.now());
         newUser.setUsername(user.getUserNameMail());
 
         if (userRepository.findByUsername(user.getUserNameMail()) == null){
@@ -183,7 +184,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto changePassword(String password) {
+    public String changePassword(String password) {
         return null;
     }
 }

@@ -6,6 +6,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /* @author Rostislav Dolbilov */
 
@@ -19,11 +20,11 @@ public class BaseEntity {
 
     @JsonFormat(pattern = "yyyMMMdd")
     @Column(name = "created")
-    private LocalDate created;
+    private LocalDateTime created;
 
     @JsonFormat(pattern = "yyyMMMdd")
     @Column(name = "updated")
-    private LocalDate updated;
+    private LocalDateTime updated;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status")

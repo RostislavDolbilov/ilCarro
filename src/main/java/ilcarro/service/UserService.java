@@ -26,10 +26,19 @@ public interface UserService {
     UserDto deleteUser(String username) throws NotFoundException;
     UserDto returnUser(String username);
     UserDto updateUser(UserDto user);
-    UserDto changePassword(String password);
+    String changePassword(String password);
 
 //    List<CarDto> getOwnerCars(String username);
 //    List<RentDto> getOwnerRents(String username);
+//    UserDto addCar(CarDto car);
+//    RentDto makeRent(RentDto rent);
+//    RentDto updateRent(RentDto rent);
+//    String payRent(String rentId);
+//    String validRent(String rentId);
+//    String closeRent(String rentId);
+//    CommentDto makeComment(CommentDto comment);
+//    CommentDto updateComment(CommentDto comment);
+//    CommentDto deleteComment(CommentDto comment);
 
 
     /*  NOT REGISTERED USERS */
