@@ -181,4 +181,9 @@ public class UserServiceImpl implements UserService {
     public UserDto updateUser(UserDto user) {
         return null;
     }
+
+    @Override
+    public UserDto changePassword(String password) {
+        return null;
+    }
 }

@@ -26,6 +26,7 @@ public interface UserService {
     UserDto deleteUser(String username) throws NotFoundException;
     UserDto returnUser(String username);
     UserDto updateUser(UserDto user);
+    UserDto changePassword(String password);
 
 //    List<CarDto> getOwnerCars(String username);
 //    List<RentDto> getOwnerRents(String username);
