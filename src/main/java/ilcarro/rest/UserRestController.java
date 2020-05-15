@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ilcarro.service.UserService;
 
+/* @author Rostislav Dolbilov */
+
 @RestController
 @RequestMapping(value = "/api/user/")
 public class UserRestController {

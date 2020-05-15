@@ -3,6 +3,7 @@ package ilcarro.security;
 import ilcarro.model.auth.User;
 import ilcarro.security.jwt.JwtUser;
 import ilcarro.security.jwt.JwtUserFactory;
+import ilcarro.service.AdminService;
 import ilcarro.service.UserService;
 import javassist.NotFoundException;
 import lombok.extern.slf4j.Slf4j;
@@ -17,18 +18,18 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class JwtUserDetailsService implements UserDetailsService {
 
-    private final UserService userService;
+    private final AdminService adminService;
 
     @Autowired
-    public JwtUserDetailsService(UserService userService) {
-        this.userService = userService;
+    public JwtUserDetailsService(AdminService adminService) {
+        this.adminService = adminService;
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = null;
         try {
-            user = userService.findByUsername(username);
+            user = adminService.findByUsername(username);
         } catch (NotFoundException e) {
             e.printStackTrace();
         }

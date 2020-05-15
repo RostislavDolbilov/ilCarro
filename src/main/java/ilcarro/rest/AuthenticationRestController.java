@@ -1,6 +1,7 @@
 package ilcarro.rest;
 
 import ilcarro.model.auth.User;
+import ilcarro.service.AdminService;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,21 +21,23 @@ import ilcarro.service.UserService;
 import java.util.HashMap;
 import java.util.Map;
 
+/* @author Rostislav Dolbilov */
+
 @RestController
 @RequestMapping(value = "/api/auth/")
 public class AuthenticationRestController {
 
     private final AuthenticationManager authenticationManager;
     private final JwtTokenProvider jwtTokenProvider;
-    private final UserService userService;
+    private final AdminService adminService;
 
     @Autowired
     public AuthenticationRestController(AuthenticationManager authenticationManager,
                                         JwtTokenProvider jwtTokenProvider,
-                                        UserService userService) {
+                                        AdminService adminService) {
         this.authenticationManager = authenticationManager;
         this.jwtTokenProvider = jwtTokenProvider;
-        this.userService = userService;
+        this.adminService = adminService;
     }
 
     @PostMapping("login")
@@ -43,7 +46,7 @@ public class AuthenticationRestController {
             String username = requestDto.getUsername();
             String password = requestDto.getPassword();
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
-            User user = userService.findByUsername(username);
+            User user = adminService.findByUsername(username);
 
             if (user == null) {
                 throw new UsernameNotFoundException("User with username: " + username + " not found");
