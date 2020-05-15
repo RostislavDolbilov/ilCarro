@@ -1,8 +1,9 @@
 package ilcarro.model.auth;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import ilcarro.model.Base;
+import lombok.*;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,11 +13,14 @@ import java.util.List;
 
 /* @author Rostislav Dolbilov */
 
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter @Setter
 @EqualsAndHashCode(callSuper = true)
+
 @Entity
 @Table(name = "roles")
-@Data
-public class Role extends BaseEntity {
+public class Role extends Base {
 
     @Column(name = "name")
     private String name;

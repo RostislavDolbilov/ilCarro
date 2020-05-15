@@ -1,6 +1,6 @@
 package ilcarro.rest;
 
-import ilcarro.dto.UserDto;
+import ilcarro.dto.user.UserDto;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

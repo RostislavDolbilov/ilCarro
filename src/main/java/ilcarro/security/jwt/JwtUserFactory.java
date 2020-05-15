@@ -5,7 +5,6 @@ import ilcarro.model.auth.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import ilcarro.dto.Status;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;

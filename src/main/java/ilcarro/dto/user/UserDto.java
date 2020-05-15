@@ -1,11 +1,19 @@
-package ilcarro.dto;
+package ilcarro.dto.user;
 
-import ilcarro.model.app.UserEntity;
-import lombok.Data;
+import ilcarro.dto.Status;
+import ilcarro.dto.car.Car;
+import ilcarro.model.app.user.UserEntity;
+import lombok.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /* @author Rostislav Dolbilov */
 
-@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter @Setter
+@EqualsAndHashCode
 public class UserDto {
     private String usernameMail;
     private String photo;
@@ -13,11 +21,7 @@ public class UserDto {
     private String secondName;
     private String phoneNumber;
     private Status status;
-
-    /*
-    private List<CarDto> cars;
-    private List<RentDto> rents;
-     */
+    private List<Car> cars;
 
     public UserEntity toUserEntity(){
         UserEntity userEntity = new UserEntity();
@@ -27,6 +31,11 @@ public class UserDto {
         userEntity.setPhoneNumber(phoneNumber);
         userEntity.setPhoto(photo);
         userEntity.setStatus(status);
+        if (cars != null){
+            userEntity.setCars(cars
+                    .stream().map(Car::toCarEntity)
+                    .collect(Collectors.toList()));
+        }
         return userEntity;
     }
 }

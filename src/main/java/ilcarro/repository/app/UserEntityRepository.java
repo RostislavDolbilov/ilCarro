@@ -1,6 +1,6 @@
 package ilcarro.repository.app;
 
-import ilcarro.model.app.UserEntity;
+import ilcarro.model.app.user.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /*

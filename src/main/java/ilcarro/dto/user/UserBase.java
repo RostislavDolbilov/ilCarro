@@ -1,11 +1,16 @@
-package ilcarro.dto;
+package ilcarro.dto.user;
 
-import lombok.Data;
+import ilcarro.dto.Status;
+import lombok.*;
 
 /* @author Rostislav Dolbilov */
 
-@Data
-public class UserBaseDto {
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter @Setter
+@EqualsAndHashCode
+
+public class UserBase {
     private String userNameMail;
     private String firstName;
     private String secondName;

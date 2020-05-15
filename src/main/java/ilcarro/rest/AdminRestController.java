@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ilcarro.dto.UserAuthDto;
+import ilcarro.dto.user.UserAuth;
 import ilcarro.service.UserService;
 
 import java.util.List;
@@ -22,22 +22,22 @@ public class AdminRestController {
 
 
     @GetMapping(value = "all_registered_users")
-    public ResponseEntity<List<UserAuthDto>> getAllRegisteredUsers() {
+    public ResponseEntity<List<UserAuth>> getAllRegisteredUsers() {
         return new ResponseEntity<>(userService.getAllRegisteredUsers(), HttpStatus.OK);
     }
 
     @GetMapping(value = "all_active_users")
-    public ResponseEntity<List<UserAuthDto>> getAllActiveUsers() {
+    public ResponseEntity<List<UserAuth>> getAllActiveUsers() {
         return new ResponseEntity<>(userService.getAllActiveUsers(), HttpStatus.OK);
     }
 
     @GetMapping(value = "all_deleted_users")
-    public ResponseEntity<List<UserAuthDto>> getAllDeletedUsers() {
+    public ResponseEntity<List<UserAuth>> getAllDeletedUsers() {
         return new ResponseEntity<>(userService.getAllDeletedUsers(), HttpStatus.OK);
     }
 
     @GetMapping(value = "all_admin_users")
-    public ResponseEntity<List<UserAuthDto>> getAllAdminUsers() {
+    public ResponseEntity<List<UserAuth>> getAllAdminUsers() {
         return new ResponseEntity<>(userService.getAllAdminUsers(), HttpStatus.OK);
     }
 }

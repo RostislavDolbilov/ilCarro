@@ -1,8 +1,8 @@
-package ilcarro.model.auth;
+package ilcarro.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import ilcarro.dto.Status;
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -10,9 +10,12 @@ import java.time.LocalDateTime;
 
 /* @author Rostislav Dolbilov */
 
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter @Setter
+
 @MappedSuperclass
-@Data
-public class BaseEntity {
+public class Base {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,7 +29,5 @@ public class BaseEntity {
     @Column(name = "updated")
     private LocalDateTime updated;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "status")
-    private Status status;
+
 }

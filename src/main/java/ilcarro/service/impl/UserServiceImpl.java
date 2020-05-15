@@ -8,17 +8,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import ilcarro.dto.UserAuthDto;
-import ilcarro.dto.UserBaseDto;
-import ilcarro.dto.UserDto;
-import ilcarro.model.app.UserEntity;
+import ilcarro.dto.user.UserAuth;
+import ilcarro.dto.user.UserBase;
+import ilcarro.dto.user.UserDto;
+import ilcarro.model.app.user.UserEntity;
 import ilcarro.dto.Status;
 import ilcarro.repository.app.UserEntityRepository;
 import ilcarro.repository.auth.RoleRepository;
 import ilcarro.repository.auth.UserRepository;
 import ilcarro.service.UserService;
-
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,13 +43,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto registration(UserBaseDto user) throws ActionDeniedException {
+    public UserDto registration(UserBase user) throws ActionDeniedException {
         Role roleUser = roleRepository.findByName("ROLE_USER");
         List<Role> userRoles = new ArrayList<>();
         userRoles.add(roleUser);
 
         UserEntity userEntity = new UserEntity(user);
-        User newUser = new User();
+        userEntity.setCreated(LocalDateTime.now());
+        userEntity.setUpdated(LocalDateTime.now());
+
+        ilcarro.model.auth.User newUser = new ilcarro.model.auth.User();
         newUser.setPassword(passwordEncoder.encode(user.getPassword()));
         newUser.setRoles(userRoles);
         newUser.setStatus(user.getStatus());
@@ -83,7 +84,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findByUsername(String username) throws NotFoundException {
-        User user = userRepository.findByUsername(username);
+        ilcarro.model.auth.User user = userRepository.findByUsername(username);
         if (user == null) {
             log.warn("IN findByUsername - no user found by username: {}", username);
             throw  new NotFoundException("User with username: " + username + "not found");
@@ -97,7 +98,7 @@ public class UserServiceImpl implements UserService {
         UserEntity user = userEntityRepository.findByUsernameMail(username);
         user.setStatus(Status.DELETED);
 
-        User userAuth = userRepository.findByUsername(username);
+        ilcarro.model.auth.User userAuth = userRepository.findByUsername(username);
         userAuth.setStatus(Status.DELETED);
 
         userRepository.save(userAuth);
@@ -110,7 +111,7 @@ public class UserServiceImpl implements UserService {
         UserEntity user = userEntityRepository.findByUsernameMail(username);
         user.setStatus(Status.ACTIVE);
 
-        User userAuth = userRepository.findByUsername(username);
+        ilcarro.model.auth.User userAuth = userRepository.findByUsername(username);
         userAuth.setStatus(Status.ACTIVE);
 
         userRepository.save(userAuth);
@@ -119,8 +120,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findById(Long id) throws NotFoundException {
-        User result = userRepository.findById(id).orElse(null);
+    public ilcarro.model.auth.User findById(Long id) throws NotFoundException {
+        ilcarro.model.auth.User result = userRepository.findById(id).orElse(null);
         if (result == null) {
             log.warn("IN findById - no user found by id: {}", id);
             throw  new NotFoundException("User with id: " + id + "not found");
@@ -130,44 +131,44 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserAuthDto> getAllRegisteredUsers() {
-        List<UserAuthDto> result = userRepository.findAll()
+    public List<UserAuth> getAllRegisteredUsers() {
+        List<UserAuth> result = userRepository.findAll()
                 .stream()
-                .map(User::toUserAuthDto)
+                .map(ilcarro.model.auth.User::toUserAuthDto)
                 .collect(Collectors.toList());
         log.info("IN getAllRegisteredUsers - {} users found", result.size());
         return result;
     }
 
     @Override
-    public List<UserAuthDto> getAllActiveUsers() {
-        List<UserAuthDto> result = userRepository.findAll()
+    public List<UserAuth> getAllActiveUsers() {
+        List<UserAuth> result = userRepository.findAll()
                 .stream()
                 .filter(user -> user.getStatus() == Status.ACTIVE)
-                .map(User::toUserAuthDto)
+                .map(ilcarro.model.auth.User::toUserAuthDto)
                 .collect(Collectors.toList());
         log.info("IN getAllActiveUsers - {} users found", result.size());
         return result;
     }
 
     @Override
-    public List<UserAuthDto> getAllDeletedUsers() {
-        List<UserAuthDto> result = userRepository.findAll()
+    public List<UserAuth> getAllDeletedUsers() {
+        List<UserAuth> result = userRepository.findAll()
                 .stream()
                 .filter(user -> user.getStatus() == Status.DELETED)
-                .map(User::toUserAuthDto)
+                .map(ilcarro.model.auth.User::toUserAuthDto)
                 .collect(Collectors.toList());
         log.info("IN getAllDeletedUsers - {} users found", result.size());
         return result;
     }
 
     @Override
-    public List<UserAuthDto> getAllAdminUsers() {
+    public List<UserAuth> getAllAdminUsers() {
         Role role = roleRepository.findByName("ROLE_ADMIN");
-        List<UserAuthDto> result = userRepository.findAll()
+        List<UserAuth> result = userRepository.findAll()
                 .stream()
                 .filter(user -> user.getRoles().contains(role))
-                .map(User::toUserAuthDto)
+                .map(ilcarro.model.auth.User::toUserAuthDto)
                 .collect(Collectors.toList());
         log.info("IN getAllAdminUsers - {} users found", result.size());
         return result;

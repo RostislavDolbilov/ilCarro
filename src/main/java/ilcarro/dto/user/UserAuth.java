@@ -1,17 +1,24 @@
-package ilcarro.dto;
+package ilcarro.dto.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import ilcarro.dto.Status;
 import ilcarro.model.auth.Role;
 import ilcarro.model.auth.User;
-import lombok.Data;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
+/* @author Rostislav Dolbilov */
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter @Setter
+@EqualsAndHashCode
 @JsonIgnoreProperties(ignoreUnknown = true)
-@Data
-public class UserAuthDto {
+
+public class UserAuth {
     private String username;
     private LocalDateTime created;
     private LocalDateTime updated;

@@ -2,30 +2,31 @@ package ilcarro.model.auth;
 
 /* @author Rostislav Dolbilov */
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import ilcarro.dto.UserAuthDto;
+import ilcarro.dto.Status;
+import ilcarro.model.Base;
+import lombok.*;
+import ilcarro.dto.user.UserAuth;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.List;
 
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter @Setter
 @EqualsAndHashCode(callSuper = true)
+
 @Entity
 @Table(name = "users")
-@Data
-public class User extends BaseEntity {
-
+public class User extends Base {
     @Column(name = "username")
     private String username;
 
     @Column(name = "password")
     private String password;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private Status status;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles",
@@ -33,14 +34,13 @@ public class User extends BaseEntity {
             inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")})
     private List<Role> roles;
 
-    public UserAuthDto toUserAuthDto(){
-        UserAuthDto user = new UserAuthDto();
+    public UserAuth toUserAuthDto(){
+        UserAuth user = new UserAuth();
         user.setUsername(username);
         user.setCreated(super.getCreated());
         user.setUpdated(super.getUpdated());
-        user.setStatus(super.getStatus());
+        user.setStatus(status);
         user.setRoles(roles);
-
         return user;
     }
 }

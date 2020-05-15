@@ -1,24 +1,26 @@
-package ilcarro.model.app;
+package ilcarro.model.app.user;
 
-import ilcarro.dto.UserBaseDto;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import ilcarro.dto.UserDto;
+import ilcarro.dto.user.UserBase;
+import ilcarro.model.Base;
+import ilcarro.model.app.car.CarEntity;
+import lombok.*;
+import ilcarro.dto.user.UserDto;
 import ilcarro.dto.Status;
 
 import javax.persistence.*;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /* @author Rostislav Dolbilov */
 
 @NoArgsConstructor
+@AllArgsConstructor
+@Getter @Setter
+@EqualsAndHashCode(callSuper = true)
+
 @Entity
 @Table(name = "users")
-@Data
-public class UserEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+public class UserEntity extends Base {
     @Column(name = "username_email", unique = true)
     private String usernameMail;
 
@@ -38,15 +40,10 @@ public class UserEntity {
     @Column(name = "status")
     private Status status;
 
-    /*
-    @OneToMany
-    private List<CarDto> cars;
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    private List<CarEntity> cars;
 
-    @OneToMany
-    private List<RentDto> rents;
-     */
-
-    public UserEntity(UserBaseDto user) {
+    public UserEntity(UserBase user) {
         this.usernameMail = user.getUserNameMail();
         this.firstName = user.getFirstName();
         this.secondName = user.getSecondName();
@@ -61,6 +58,12 @@ public class UserEntity {
         user.setPhoneNumber(phoneNumber);
         user.setPhoto(photo);
         user.setStatus(status);
+        if (cars != null){
+            user.setCars(cars
+                    .stream()
+                    .map(CarEntity::toCar)
+                    .collect(Collectors.toList()));
+        }
         return user;
     }
 }

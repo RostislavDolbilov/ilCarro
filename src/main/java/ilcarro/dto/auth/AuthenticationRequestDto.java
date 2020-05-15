@@ -1,10 +1,14 @@
-package ilcarro.dto;
+package ilcarro.dto.auth;
 
-import lombok.Data;
+import lombok.*;
 
 /* @author Rostislav Dolbilov */
 
-@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter @Setter
+@EqualsAndHashCode
+
 public class AuthenticationRequestDto {
     private String username;
     private String password;
