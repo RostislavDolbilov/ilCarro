@@ -4,9 +4,12 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import ilcarro.dto.user.UserBase;
 import ilcarro.model.Base;
 import ilcarro.model.app.car.CarEntity;
+import ilcarro.model.app.car.RentEntity;
 import lombok.*;
 import ilcarro.dto.user.UserDto;
 import ilcarro.dto.Status;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.List;
@@ -42,8 +45,14 @@ public class UserEntity extends Base {
     private Status status;
 
     @JsonBackReference
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(mappedBy = "user")
     private List<CarEntity> cars;
+
+    @JsonBackReference
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(mappedBy = "userEntity")
+    private List<RentEntity> rents;
 
     public UserEntity(UserBase user) {
         this.usernameMail = user.getUserNameMail();
@@ -62,8 +71,12 @@ public class UserEntity extends Base {
         user.setStatus(status);
         if (cars != null){
             user.setCars(cars
-                    .stream()
-                    .map(CarEntity::toCar)
+                    .stream().map(CarEntity::toCar)
+                    .collect(Collectors.toList()));
+        }
+        if (rents != null){
+            user.setRents(rents
+                    .stream().map(RentEntity::toRent)
                     .collect(Collectors.toList()));
         }
         return user;

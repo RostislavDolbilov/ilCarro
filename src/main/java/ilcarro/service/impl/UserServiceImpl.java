@@ -3,6 +3,7 @@ package ilcarro.service.impl;
 import ilcarro.dto.car.Car;
 import ilcarro.dto.car.Comments;
 import ilcarro.dto.car.Images;
+import ilcarro.dto.car.Location;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -104,6 +105,26 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Images uploadImages(Images images) {
+        return null;
+    }
+
+    @Override
+    public void deleteImage(int idImg) {
+
+    }
+
+    @Override
+    public Images getIdImage(Images image) {
+        return null;
+    }
+
+    @Override
+    public Location addLocation(Location location) {
+        return null;
+    }
+
+    @Override
+    public Location updateLocation(Location location) {
         return null;
     }
 

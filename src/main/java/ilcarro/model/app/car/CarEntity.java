@@ -63,6 +63,9 @@ public class CarEntity extends Base {
     @OneToMany(mappedBy = "car")
     private List<CommentsEntity> comments;
 
+    @OneToOne(mappedBy = "car")
+    private RentEntity rent;
+
     public CarEntity(Car car) {
         this.serial_number = car.getSerial_number();
         this.user = car.getUser().toUserEntity();
