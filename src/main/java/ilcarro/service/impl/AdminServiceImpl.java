@@ -1,6 +1,7 @@
 package ilcarro.service.impl;
 
 import ilcarro.dto.Status;
+import ilcarro.dto.car.*;
 import ilcarro.dto.user.UserAuth;
 import ilcarro.dto.user.UserDto;
 import ilcarro.model.auth.Role;
@@ -100,8 +101,57 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public UserDto addRoleAdmin() {
+    public UserDto giveRoleAdmin() {
         return null;
     }
 
+    @Override
+    public Fuel uploadFuel(Fuel fuel) {
+        return null;
+    }
+
+    @Override
+    public void deleteFuel(String fuel) {
+
+    }
+
+    @Override
+    public Manufacturer uploadManufacturer(Manufacturer manufacturer) {
+        return null;
+    }
+
+    @Override
+    public void deleteManufacturer(String manufacturer) {
+
+    }
+
+    @Override
+    public Model uploadModel(Model model) {
+        return null;
+    }
+
+    @Override
+    public void deleteModel(String model) {
+
+    }
+
+    @Override
+    public Transmission uploadTransmission(Transmission transmission) {
+        return null;
+    }
+
+    @Override
+    public void deleteTransmission(String transmission) {
+
+    }
+
+    @Override
+    public WheelDrive uploadWheelDrive(WheelDrive wheelDrive) {
+        return null;
+    }
+
+    @Override
+    public void deleteWheelDrive(String wheelDrive) {
+
+    }
 }

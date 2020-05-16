@@ -1,5 +1,8 @@
 package ilcarro.service;
 
+import ilcarro.dto.car.Car;
+import ilcarro.dto.car.Comments;
+import ilcarro.dto.car.Images;
 import ilcarro.dto.user.UserDto;
 import javassist.NotFoundException;
 
@@ -8,6 +11,20 @@ import javassist.NotFoundException;
 public interface UserService {
     UserDto deleteUser(String username) throws NotFoundException;
     UserDto returnUser(String username);
-    UserDto updateUser(UserDto user);
     String changePassword(String password);
+
+    UserDto updateUser(UserDto user);
+
+    Car uploadCarr(Car car);
+    Car updateCar(Car car);
+    void deleteCar(String serialNumber);
+    Car getCarBySerialNumber(String serialNumber);
+
+    Comments addComment(Comments comments);
+    Comments updateComment(Comments comments);
+    void deleteComments(int idComment);
+    Comments getCommentById(int idComment);
+
+    Images uploadImages(Images images);
+
 }

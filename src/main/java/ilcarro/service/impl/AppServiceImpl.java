@@ -1,5 +1,6 @@
 package ilcarro.service.impl;
 
+import ilcarro.dto.car.*;
 import ilcarro.dto.user.UserBase;
 import ilcarro.dto.user.UserDto;
 import ilcarro.exeptions.ActionDeniedException;
@@ -80,5 +81,30 @@ public class AppServiceImpl implements AppService {
         }
         log.info("IN findByUsernameMail - user: {} found by username: {}", user, username);
         return user;
+    }
+
+    @Override
+    public WheelDrive getWheelDriveByWheelDriveName(String wheelDrive) {
+        return null;
+    }
+
+    @Override
+    public Fuel getFuelByFuelName(String fuel) {
+        return null;
+    }
+
+    @Override
+    public Model getModelByModelName(String model) {
+        return null;
+    }
+
+    @Override
+    public Transmission getTransmissionByTransmissionName(String transmission) {
+        return null;
+    }
+
+    @Override
+    public Manufacturer getManufacturerByManufacturerName(String manufacturer) {
+        return null;
     }
 }

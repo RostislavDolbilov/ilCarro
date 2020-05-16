@@ -1,5 +1,8 @@
 package ilcarro.service.impl;
 
+import ilcarro.dto.car.Car;
+import ilcarro.dto.car.Comments;
+import ilcarro.dto.car.Images;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -56,6 +59,51 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto updateUser(UserDto user) {
+        return null;
+    }
+
+    @Override
+    public Car uploadCarr(Car car) {
+        return null;
+    }
+
+    @Override
+    public Car updateCar(Car car) {
+        return null;
+    }
+
+    @Override
+    public void deleteCar(String serialNumber) {
+
+    }
+
+    @Override
+    public Car getCarBySerialNumber(String serialNumber) {
+        return null;
+    }
+
+    @Override
+    public Comments addComment(Comments comments) {
+        return null;
+    }
+
+    @Override
+    public Comments updateComment(Comments comments) {
+        return null;
+    }
+
+    @Override
+    public void deleteComments(int idComment) {
+
+    }
+
+    @Override
+    public Comments getCommentById(int idComment) {
+        return null;
+    }
+
+    @Override
+    public Images uploadImages(Images images) {
         return null;
     }
 

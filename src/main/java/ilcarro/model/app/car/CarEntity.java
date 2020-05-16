@@ -5,6 +5,7 @@ import ilcarro.model.Base;
 import ilcarro.model.app.user.UserEntity;
 import lombok.*;
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,6 +19,9 @@ import java.util.stream.Collectors;
 @Entity
 @Table(name = "car")
 public class CarEntity extends Base {
+    @NonNull
+    @NotEmpty
+    private String serial_number;
 
     @ManyToOne
     private UserEntity user;
@@ -58,6 +62,7 @@ public class CarEntity extends Base {
     private List<CommentsEntity> comments;
 
     public CarEntity(Car car) {
+        this.serial_number = car.getSerial_number();
         this.user = car.getUser().toUserEntity();
         this.location = car.getLocation().toLocationEntity();
         this.model = car.getModel().toModelEntity();
@@ -83,30 +88,31 @@ public class CarEntity extends Base {
     }
 
     public Car toCar(){
-        return new Car(user.toUserDto(),
-        location.toLocation(),
-        model.getManufacturer().toManufacturer(),
-        model.toModel(),
-        images.stream()
-                .map(ImagesEntity::toImages)
-                .collect(Collectors.toList()),
-        transmission.toTransmission(),
-        year,
-        engine,
-        fuel.toFuel(),
-        wheelDrive.toWheelDrive(),
-        horsepower,
-        torque,
-        doors,
-        seats,
-        classCar,
-        fuelConsumption,
-        about,
-        features,
-        price,
-        rating,
-        comments.stream()
-                .map(CommentsEntity::toComments)
-                .collect(Collectors.toList()));
+        return new Car(serial_number,
+                user.toUserDto(),
+                location.toLocation(),
+                model.getManufacturer().toManufacturer(),
+                model.toModel(),
+                images.stream()
+                        .map(ImagesEntity::toImages)
+                        .collect(Collectors.toList()),
+                transmission.toTransmission(),
+                year,
+                engine,
+                fuel.toFuel(),
+                wheelDrive.toWheelDrive(),
+                horsepower,
+                torque,
+                doors,
+                seats,
+                classCar,
+                fuelConsumption,
+                about,
+                features,
+                price,
+                rating,
+                comments.stream()
+                        .map(CommentsEntity::toComments)
+                        .collect(Collectors.toList()));
     }
 }

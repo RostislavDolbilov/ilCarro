@@ -4,6 +4,7 @@ import ilcarro.dto.user.UserDto;
 import ilcarro.model.app.car.CarEntity;
 import lombok.*;
 
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -15,6 +16,7 @@ import java.util.stream.Collectors;
 @EqualsAndHashCode
 
 public class Car {
+    private String serial_number;
     private UserDto user;
     private Location location;
     private Manufacturer manufacturer;
@@ -39,6 +41,7 @@ public class Car {
 
     public CarEntity toCarEntity(){
         CarEntity carEntity = new CarEntity();
+        carEntity.setSerial_number(serial_number);
         carEntity.setUser(user.toUserEntity());
         carEntity.setLocation(location.toLocationEntity());
         carEntity.setModel(model.toModelEntity());
