@@ -6,6 +6,8 @@ import ilcarro.dto.user.UserDto;
 import ilcarro.exeptions.ActionDeniedException;
 import javassist.NotFoundException;
 
+import java.util.List;
+
 /* @author Rostislav Dolbilov */
 
 public interface AppService {
@@ -17,4 +19,7 @@ public interface AppService {
     Model getModelByModelName(String model);
     Transmission getTransmissionByTransmissionName(String transmission);
     Manufacturer getManufacturerByManufacturerName(String manufacturer);
+
+//    List<Car> sortCarsByFilter(SortFilter sortFilter);
+//    List<Car> getCarsByFilter(CarFilter carFilter);
 }

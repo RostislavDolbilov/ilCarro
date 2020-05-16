@@ -3,6 +3,7 @@ package ilcarro.service;
 import ilcarro.dto.car.Car;
 import ilcarro.dto.car.Comments;
 import ilcarro.dto.car.Images;
+import ilcarro.dto.car.Location;
 import ilcarro.dto.user.UserDto;
 import javassist.NotFoundException;
 
@@ -26,5 +27,9 @@ public interface UserService {
     Comments getCommentById(int idComment);
 
     Images uploadImages(Images images);
+    void deleteImage(int idImg);
+    Images getIdImage(Images image);
 
+    Location addLocation(Location location);
+    Location updateLocation(Location location);
 }
