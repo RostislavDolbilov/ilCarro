@@ -1,5 +1,6 @@
 package ilcarro.model.app.car;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import ilcarro.dto.car.Model;
 import ilcarro.model.Base;
 import lombok.*;
@@ -22,6 +23,7 @@ public class ModelEntity extends Base {
     private ManufacturerEntity manufacturer;
 
     @NonNull
+    @JsonBackReference
     @OneToMany(mappedBy = "model")
     private List<CarEntity> cars;
 

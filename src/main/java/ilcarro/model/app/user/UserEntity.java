@@ -1,5 +1,6 @@
 package ilcarro.model.app.user;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import ilcarro.dto.user.UserBase;
 import ilcarro.model.Base;
 import ilcarro.model.app.car.CarEntity;
@@ -40,6 +41,7 @@ public class UserEntity extends Base {
     @Column(name = "status")
     private Status status;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<CarEntity> cars;
 

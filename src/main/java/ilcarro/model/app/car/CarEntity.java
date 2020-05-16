@@ -1,5 +1,6 @@
 package ilcarro.model.app.car;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import ilcarro.dto.car.*;
 import ilcarro.model.Base;
 import ilcarro.model.app.user.UserEntity;
@@ -58,6 +59,7 @@ public class CarEntity extends Base {
     private Double price;
     private Double rating;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "car")
     private List<CommentsEntity> comments;
 

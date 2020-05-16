@@ -1,5 +1,6 @@
 package ilcarro.model.app.car;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import ilcarro.dto.car.Manufacturer;
 import ilcarro.dto.car.Model;
 import ilcarro.model.Base;
@@ -22,6 +23,7 @@ import java.util.stream.Collectors;
 public class ManufacturerEntity extends Base {
     private String manufacturer;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "manufacturer")
     private List<ModelEntity> models;
 
