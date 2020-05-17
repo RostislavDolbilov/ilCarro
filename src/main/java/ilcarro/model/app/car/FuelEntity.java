@@ -1,22 +1,25 @@
 package ilcarro.model.app.car;
 
 import ilcarro.dto.car.Fuel;
-import ilcarro.model.Base;
+import ilcarro.model.auth.Base;
 import lombok.*;
-import javax.persistence.Entity;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+
+import javax.persistence.*;
 
 /* @author Rostislav Dolbilov */
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter @Setter
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode
 
 @Entity
 @Table(name = "fuel")
-public class FuelEntity extends Base {
+public class FuelEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private String fuel;
 
     @OneToOne(mappedBy = "fuel")

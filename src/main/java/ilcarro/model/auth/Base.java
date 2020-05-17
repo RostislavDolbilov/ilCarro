@@ -1,4 +1,4 @@
-package ilcarro.model;
+package ilcarro.model.auth;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import ilcarro.dto.Status;

@@ -1,7 +1,6 @@
 package ilcarro.model.auth;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import ilcarro.model.Base;
 import lombok.*;
 
 import javax.persistence.Column;

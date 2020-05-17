@@ -2,7 +2,7 @@ package ilcarro.model.app.car;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import ilcarro.dto.car.Model;
-import ilcarro.model.Base;
+import ilcarro.model.auth.Base;
 import lombok.*;
 import javax.persistence.*;
 import java.util.List;
@@ -12,11 +12,15 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter @Setter
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode
 
 @Entity
 @Table(name = "model")
-public class ModelEntity extends Base {
+public class ModelEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private String model;
 
     @ManyToOne

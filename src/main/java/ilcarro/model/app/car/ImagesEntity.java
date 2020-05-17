@@ -1,7 +1,7 @@
 package ilcarro.model.app.car;
 
 import ilcarro.dto.car.Images;
-import ilcarro.model.Base;
+import ilcarro.model.auth.Base;
 import lombok.*;
 import javax.persistence.*;
 
@@ -10,11 +10,15 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter @Setter
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode
 
 @Entity
 @Table(name = "images")
-public class ImagesEntity extends Base {
+public class ImagesEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private String imgUrl;
 
     @ManyToOne(cascade = CascadeType.ALL)

@@ -1,22 +1,25 @@
 package ilcarro.model.app.car;
 
 import ilcarro.dto.car.WheelDrive;
-import ilcarro.model.Base;
+import ilcarro.model.auth.Base;
 import lombok.*;
-import javax.persistence.Entity;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+
+import javax.persistence.*;
 
 /* @author Rostislav Dolbilov */
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter @Setter
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode
 
 @Entity
 @Table(name = "wheel_drive")
-public class WheelDriveEntity extends Base {
+public class WheelDriveEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private String wheelDrive;
 
     @OneToOne(mappedBy = "wheelDrive")

@@ -3,11 +3,10 @@ package ilcarro.model.app.car;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import ilcarro.dto.car.Manufacturer;
 import ilcarro.dto.car.Model;
-import ilcarro.model.Base;
+import ilcarro.model.auth.Base;
 import lombok.*;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+
+import javax.persistence.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,11 +15,15 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter @Setter
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode
 
 @Entity
 @Table(name = "car")
-public class ManufacturerEntity extends Base {
+public class ManufacturerEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private String manufacturer;
 
     @JsonBackReference

@@ -1,7 +1,7 @@
 package ilcarro.model.app.car;
 
 import ilcarro.dto.car.Comments;
-import ilcarro.model.Base;
+import ilcarro.model.auth.Base;
 import ilcarro.model.app.user.UserEntity;
 import lombok.*;
 
@@ -12,12 +12,16 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter @Setter
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode
 
 @Entity
 @Table(name = "comment")
 
-public class CommentsEntity extends Base {
+public class CommentsEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     @OneToOne
     private UserEntity user;
 

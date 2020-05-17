@@ -1,22 +1,25 @@
 package ilcarro.model.app.car;
 
 import ilcarro.dto.car.Location;
-import ilcarro.model.Base;
+import ilcarro.model.auth.Base;
 import lombok.*;
-import javax.persistence.Entity;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+
+import javax.persistence.*;
 
 /* @author Rostislav Dolbilov */
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter @Setter
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode
 
 @Entity
 @Table(name = "location")
-public class LocationEntity extends Base {
+public class LocationEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private String country;
 
     private String city;

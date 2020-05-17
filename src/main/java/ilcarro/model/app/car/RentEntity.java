@@ -4,23 +4,24 @@ package ilcarro.model.app.car;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import ilcarro.dto.car.Rent;
-import ilcarro.model.Base;
+import ilcarro.model.auth.Base;
 import ilcarro.model.app.user.UserEntity;
 import lombok.*;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter @Setter
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode
 
 @Entity
 @Table(name = "rents")
-public class RentEntity extends Base {
+public class RentEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @OneToOne
     private CarEntity car;

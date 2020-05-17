@@ -3,7 +3,6 @@ package ilcarro.model.auth;
 /* @author Rostislav Dolbilov */
 
 import ilcarro.dto.Status;
-import ilcarro.model.Base;
 import lombok.*;
 import ilcarro.dto.user.UserAuth;
 
