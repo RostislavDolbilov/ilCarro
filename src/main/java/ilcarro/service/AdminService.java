@@ -3,6 +3,7 @@ package ilcarro.service;
 import ilcarro.dto.car.*;
 import ilcarro.dto.user.UserAuth;
 import ilcarro.dto.user.UserDto;
+import ilcarro.model.auth.User;
 import javassist.NotFoundException;
 
 import javax.transaction.Transactional;
@@ -17,7 +18,7 @@ public interface AdminService {
     List<UserAuth> getAllAdminUsers();
     ilcarro.model.auth.User findByUsername(String username) throws NotFoundException;
     ilcarro.model.auth.User findById(Long id) throws NotFoundException;
-    UserDto giveRoleAdmin();
+    User giveRoleAdmin(String username);
 
     Fuel uploadFuel(Fuel fuel);
     void deleteFuel(String fuel);

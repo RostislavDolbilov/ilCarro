@@ -4,8 +4,10 @@ import ilcarro.dto.Status;
 import ilcarro.dto.car.*;
 import ilcarro.dto.user.UserAuth;
 import ilcarro.dto.user.UserDto;
+import ilcarro.model.app.user.UserEntity;
 import ilcarro.model.auth.Role;
 import ilcarro.model.auth.User;
+import ilcarro.repository.app.UserEntityRepository;
 import ilcarro.repository.auth.RoleRepository;
 import ilcarro.repository.auth.UserRepository;
 import ilcarro.service.AdminService;
@@ -14,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,12 +29,15 @@ public class AdminServiceImpl implements AdminService {
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
+    private final UserEntityRepository userEntityRepository;
 
     @Autowired
     public AdminServiceImpl(UserRepository userRepository,
-                          RoleRepository roleRepository) {
+                          RoleRepository roleRepository,
+                          UserEntityRepository userEntityRepository) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
+        this.userEntityRepository = userEntityRepository;
     }
 
     @Override
@@ -101,8 +107,14 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public UserDto giveRoleAdmin() {
-        return null;
+    public User giveRoleAdmin(String username) {
+        List<Role> userRoles = new ArrayList<>(roleRepository.findAll());
+
+        User user = userRepository.findByUsername(username);
+        user.setRoles(userRoles);
+
+        log.info("IN user - user with username: {} successfully added role admin", username);
+        return userRepository.save(user);
     }
 
     @Override

@@ -45,9 +45,8 @@ public class AppServiceImpl implements AppService {
 
     @Override
     public UserDto registration(UserBase user) throws ActionDeniedException {
-        Role roleUser = roleRepository.findByName("ROLE_USER");
         List<Role> userRoles = new ArrayList<>();
-        userRoles.add(roleUser);
+        userRoles.add(roleRepository.findByName("ROLE_USER"));
 
         UserEntity userEntity = new UserEntity(user);
         userEntity.setCreated(LocalDateTime.now());
