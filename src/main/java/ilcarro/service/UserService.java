@@ -1,9 +1,6 @@
 package ilcarro.service;
 
-import ilcarro.dto.car.Car;
-import ilcarro.dto.car.Comments;
-import ilcarro.dto.car.Images;
-import ilcarro.dto.car.Location;
+import ilcarro.dto.car.*;
 import ilcarro.dto.user.UserDto;
 import javassist.NotFoundException;
 
@@ -13,6 +10,12 @@ public interface UserService {
     UserDto deleteUser(String username) throws NotFoundException;
     UserDto returnUser(String username);
     String changePassword(String password);
+
+    WheelDrive getWheelDriveByWheelDriveName(String wheelDrive);
+    Fuel getFuelByFuelName(String fuel) throws NotFoundException;
+    Model getModelByModelName(String model);
+    Transmission getTransmissionByTransmissionName(String transmission);
+    Manufacturer getManufacturerByManufacturerName(String manufacturer) throws NotFoundException;
 
     UserDto updateUser(UserDto user);
 

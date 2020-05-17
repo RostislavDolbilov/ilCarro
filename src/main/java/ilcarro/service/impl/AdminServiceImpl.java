@@ -4,13 +4,19 @@ import ilcarro.dto.Status;
 import ilcarro.dto.car.*;
 import ilcarro.dto.user.UserAuth;
 import ilcarro.dto.user.UserDto;
+import ilcarro.exeptions.ActionDeniedException;
+import ilcarro.model.app.car.FuelEntity;
+import ilcarro.model.app.car.ManufacturerEntity;
 import ilcarro.model.app.user.UserEntity;
 import ilcarro.model.auth.Role;
 import ilcarro.model.auth.User;
+import ilcarro.repository.app.FuelRepository;
+import ilcarro.repository.app.ManufacturerRepository;
 import ilcarro.repository.app.UserEntityRepository;
 import ilcarro.repository.auth.RoleRepository;
 import ilcarro.repository.auth.UserRepository;
 import ilcarro.service.AdminService;
+import ilcarro.service.AppService;
 import javassist.NotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,20 +35,23 @@ public class AdminServiceImpl implements AdminService {
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
-    private final UserEntityRepository userEntityRepository;
+    private final FuelRepository fuelRepository;
+    private final ManufacturerRepository manufacturerRepository;
 
     @Autowired
     public AdminServiceImpl(UserRepository userRepository,
                           RoleRepository roleRepository,
-                          UserEntityRepository userEntityRepository) {
+                          FuelRepository fuelRepository,
+                            ManufacturerRepository manufacturerRepository) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
-        this.userEntityRepository = userEntityRepository;
+        this.fuelRepository = fuelRepository;
+        this.manufacturerRepository = manufacturerRepository;
     }
 
     @Override
     public User findByUsername(String username) throws NotFoundException {
-        ilcarro.model.auth.User user = userRepository.findByUsername(username);
+        User user = userRepository.findByUsername(username);
         if (user == null) {
             log.warn("IN findByUsername - no user found by username: {}", username);
             throw  new NotFoundException("User with username: " + username + "not found");
@@ -107,34 +116,57 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public User giveRoleAdmin(String username) {
+    public UserAuth giveRoleAdmin(String username) {
         List<Role> userRoles = new ArrayList<>(roleRepository.findAll());
 
         User user = userRepository.findByUsername(username);
         user.setRoles(userRoles);
 
         log.info("IN user - user with username: {} successfully added role admin", username);
-        return userRepository.save(user);
+        userRepository.save(user);
+        return user.toUserAuthDto();
     }
 
     @Override
-    public Fuel uploadFuel(Fuel fuel) {
-        return null;
+    public Fuel uploadFuel(Fuel fuel) throws ActionDeniedException {
+        if (fuelRepository.findByFuel(fuel.getFuel()) != null){
+            throw  new ActionDeniedException("Fuel " + fuel.getFuel() + "already exist");
+        } else {
+            log.warn("IN uploadFuel - fuel {} successfully uploaded", fuel);
+            return fuelRepository.save(new FuelEntity(fuel)).toFuel();
+        }
     }
 
     @Override
-    public void deleteFuel(String fuel) {
-
+    public void deleteFuel(String fuel) throws NotFoundException {
+        FuelEntity fuelEntity = fuelRepository.findByFuel(fuel);
+        if ( fuelEntity == null){
+            log.warn("IN getFuelByFuelName - no fuel found by: {}", fuel);
+            throw  new NotFoundException("Fuel " + fuel + "not found");
+        } else {
+            fuelRepository.delete(fuelEntity);
+        }
     }
 
     @Override
-    public Manufacturer uploadManufacturer(Manufacturer manufacturer) {
-        return null;
+    public Manufacturer uploadManufacturer(Manufacturer manufacturer) throws ActionDeniedException {
+        if (manufacturerRepository.findByManufacturer(manufacturer.getManufacturer()) != null){
+            throw  new ActionDeniedException("Manufacturer " + manufacturer.getManufacturer() + "already exist");
+        }else {
+            log.warn("IN uploadManufacturer - manufacturer {} successfully uploaded", manufacturer);
+            return manufacturerRepository.save(new ManufacturerEntity()).toManufacturer();
+        }
     }
 
     @Override
-    public void deleteManufacturer(String manufacturer) {
-
+    public void deleteManufacturer(String manufacturer) throws NotFoundException {
+        ManufacturerEntity manufacturerEntity = manufacturerRepository.findByManufacturer(manufacturer);
+        if (manufacturerEntity == null){
+            log.warn("IN deleteManufacturer - no manufacturer found by: {}", manufacturer);
+            throw  new NotFoundException("Manufacturer " + manufacturer + "already exist");
+        }else {
+            manufacturerRepository.delete(manufacturerEntity);
+        }
     }
 
     @Override

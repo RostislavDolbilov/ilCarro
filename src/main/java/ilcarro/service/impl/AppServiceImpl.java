@@ -4,8 +4,12 @@ import ilcarro.dto.car.*;
 import ilcarro.dto.user.UserBase;
 import ilcarro.dto.user.UserDto;
 import ilcarro.exeptions.ActionDeniedException;
+import ilcarro.model.app.car.FuelEntity;
+import ilcarro.model.app.car.ManufacturerEntity;
 import ilcarro.model.app.user.UserEntity;
 import ilcarro.model.auth.Role;
+import ilcarro.repository.app.FuelRepository;
+import ilcarro.repository.app.ManufacturerRepository;
 import ilcarro.repository.app.UserEntityRepository;
 import ilcarro.repository.auth.RoleRepository;
 import ilcarro.repository.auth.UserRepository;
@@ -19,6 +23,7 @@ import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /* @author Rostislav Dolbilov */
 
@@ -31,16 +36,22 @@ public class AppServiceImpl implements AppService {
     private final RoleRepository roleRepository;
     private final BCryptPasswordEncoder passwordEncoder;
     private final UserEntityRepository userEntityRepository;
+    private final FuelRepository fuelRepository;
+    private final ManufacturerRepository manufacturerRepository;
 
     @Autowired
     public AppServiceImpl(UserRepository userRepository,
                            RoleRepository roleRepository,
                            BCryptPasswordEncoder passwordEncoder,
-                           UserEntityRepository userEntityRepository) {
+                           UserEntityRepository userEntityRepository,
+                           FuelRepository fuelRepository,
+                           ManufacturerRepository manufacturerRepository) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
         this.userEntityRepository = userEntityRepository;
+        this.fuelRepository = fuelRepository;
+        this.manufacturerRepository = manufacturerRepository;
     }
 
     @Override
@@ -83,27 +94,28 @@ public class AppServiceImpl implements AppService {
     }
 
     @Override
-    public WheelDrive getWheelDriveByWheelDriveName(String wheelDrive) {
-        return null;
+    public List<Fuel> getAllFuels() throws NotFoundException {
+        List<Fuel> fuels = fuelRepository.findAll()
+                .stream()
+                .map(FuelEntity::toFuel)
+                .collect(Collectors.toList());
+        if (fuels.size() == 0){
+            throw new NotFoundException("Not found any fuels");
+        }else {
+            return fuels;
+        }
     }
 
     @Override
-    public Fuel getFuelByFuelName(String fuel) {
-        return null;
-    }
-
-    @Override
-    public Model getModelByModelName(String model) {
-        return null;
-    }
-
-    @Override
-    public Transmission getTransmissionByTransmissionName(String transmission) {
-        return null;
-    }
-
-    @Override
-    public Manufacturer getManufacturerByManufacturerName(String manufacturer) {
-        return null;
+    public List<Manufacturer> getAllManufacturers() throws NotFoundException {
+        List<Manufacturer> manufacturers = manufacturerRepository.findAll()
+                .stream()
+                .map(ManufacturerEntity::toManufacturer)
+                .collect(Collectors.toList());
+        if (manufacturers.size() == 0){
+            throw new NotFoundException("Not found any manufacturers");
+        }else {
+            return manufacturers;
+        }
     }
 }

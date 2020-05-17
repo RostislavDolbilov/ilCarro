@@ -3,6 +3,7 @@ package ilcarro.service;
 import ilcarro.dto.car.*;
 import ilcarro.dto.user.UserAuth;
 import ilcarro.dto.user.UserDto;
+import ilcarro.exeptions.ActionDeniedException;
 import ilcarro.model.auth.User;
 import javassist.NotFoundException;
 
@@ -16,15 +17,15 @@ public interface AdminService {
     List<UserAuth> getAllActiveUsers();
     List<UserAuth> getAllDeletedUsers();
     List<UserAuth> getAllAdminUsers();
-    ilcarro.model.auth.User findByUsername(String username) throws NotFoundException;
-    ilcarro.model.auth.User findById(Long id) throws NotFoundException;
-    User giveRoleAdmin(String username);
+    User findByUsername(String username) throws NotFoundException;
+    User findById(Long id) throws NotFoundException;
+    UserAuth giveRoleAdmin(String username);
 
-    Fuel uploadFuel(Fuel fuel);
-    void deleteFuel(String fuel);
+    Fuel uploadFuel(Fuel fuel) throws ActionDeniedException;
+    void deleteFuel(String fuel) throws NotFoundException;
 
-    Manufacturer uploadManufacturer(Manufacturer manufacturer);
-    void deleteManufacturer(String manufacturer);
+    Manufacturer uploadManufacturer(Manufacturer manufacturer) throws ActionDeniedException;
+    void deleteManufacturer(String manufacturer) throws NotFoundException;
 
     Model uploadModel(Model model);
     void deleteModel(String model);
